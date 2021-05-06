@@ -1,0 +1,6 @@
+logs/
+.jenkins/
+.github/
+etl.cfg
+venv/
+.idea/
