@@ -4,3 +4,4 @@ logs/
 etl.cfg
 venv/
 .idea/
+chromedriver
