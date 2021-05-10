@@ -23,7 +23,6 @@ logging.basicConfig(format='%(asctime)s %(message)s')
 LOG = logging.getLogger('scraper')
 LOG.setLevel(logging.DEBUG)
 
-client = boto3.client('sns')
 DRIVER_PATH = '/Users/elliott/projects/site_scraper/chromedriver'
 
 
@@ -38,7 +37,7 @@ print(NE_TGT_CNT)
 
 # other settings
 MAX_ERROR = 5
-PHONE_NUMBERS = ['+16465842049', '+12016001703'] # '+19086039726']
+PHONE_NUMBERS = ['+16465842049'] #, '+12016001703'] # '+19086039726']
 
 
 class DriverWrapper:
@@ -76,9 +75,12 @@ def send_txt(msg):
     :return:
     """
     for phone in PHONE_NUMBERS:
-        client.publish(
-            PhoneNumber=phone,
-            Message=msg)
+        try:
+            boto3.client('sns').publish(
+                PhoneNumber=phone,
+                Message=msg)
+        except Exception as err:
+            LOG.warning(str(err))
     sleep(15)
 
 
